@@ -1,15 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Actividad 4 - Máquina de Turing</title>
-  </head>
-  <body>
-    <form>
-      <input type="text" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-      <button>Calcular</button>
+    <script defer src="./script.js"></script>
+  </head>
+  <body class="max-w-sm mx-auto h-screen flex flex-col justify-center">
+    <form class="flex flex-col mb-8" id="binaryForm">
+      <h1 class="text-2xl mb-4 font-bold text-center">Máquina de Turing</h1>
+
+      <div class="mb-5">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
+          Input en Binario
+        </label>
+
+        <input
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          id="input"
+          placeholder="Ejemplo: binario 010101#01010"
+          required
+        />
+      </div>
+
+      <button
+        class="relative cursor-pointer inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 text-white"
+      >
+        <span
+          class="relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md bg-transparent"
+        >
+          Calcular resultado
+        </span>
+      </button>
     </form>
+
+    <article class="bg-gray-200 p-4 rounded-lg hidden" id="resultArticle">
+      <h2 class="mb-4 text-xl font-bold">Traducción de la Entrada</h2>
+
+      <p id="invalidBinaryMessage" class="hidden text-red-500 font-bold">
+        Entrada binaria inválida
+      </p>
+
+      <div id="resultContainer">
+        <p>
+          Entrada en Binario:
+          <b><span id="binaryInput"></span></b>
+        </p>
+
+        <p>
+          Conversión a Decimal:
+          <b><span id="decimalOutput"></span></b>
+        </p>
+
+        <p>
+          Resultado de la Máquina de Turing:
+          <b><span id="turingResult"></span></b>
+        </p>
+      </div>
+    </article>
   </body>
 </html>

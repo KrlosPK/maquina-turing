@@ -1,58 +1,53 @@
-const form = document.getElementById('binaryForm')
+const form = document.getElementById('binaryForm');
+const resultArticle = document.getElementById('resultArticle');
+const invalidBinaryMessage = document.getElementById('invalidBinaryMessage');
+const resultContainer = document.getElementById('resultContainer');
 
-const resultArticle = document.getElementById('resultArticle')
-const invalidBinaryMessage = document.getElementById('invalidBinaryMessage')
-const resultContainer = document.getElementById('resultContainer')
+const input = document.getElementById('input');
+const binaryInput = document.getElementById('binaryInput');
+const decimalOutput = document.getElementById('decimalOutput');
+const turingResult = document.getElementById('turingResult');
 
-const $input = document.getElementById('input')
-const $binaryInput = document.getElementById('binaryInput')
-const $decimalOutput = document.getElementById('decimalOutput')
-const $turingResult = document.getElementById('turingResult')
+const convertBinaryToDecimal = (binary) => parseInt(binary, 2);
+const convertDecimalToBinary = (decimal) => decimal.toString(2);
 
-function convertBinaryToDecimal(binaryString) {
-  return parseInt(binaryString, 2)
-}
+const resetUI = () => {
+  resultArticle.classList.add('hidden');
+  invalidBinaryMessage.classList.add('hidden');
+  resultContainer.classList.add('hidden');
+};
 
-function convertDecimalToBinary(decimalNumber) {
-  return decimalNumber.toString(2)
-}
+// Form handler
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  resetUI();
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault()
+  const [first, second] = input.value.trim().split('#');
 
-  resetHiddenValues()
-
-  resultArticle.classList.remove('hidden')
-
-  const entries = $input.value.trim().split('#')
-
-  if (
-    entries.length !== 2 ||
-    entries.some((entry) => isNaN(parseInt(entry, 2)))
-  ) {
-    invalidBinaryMessage.classList.remove('hidden')
-    return
+  if (!first || !second || isNaN(parseInt(first, 2)) || isNaN(parseInt(second, 2))) {
+    invalidBinaryMessage.classList.remove('hidden');
+    resultArticle.classList.remove('hidden');
+    return;
   }
 
-  resultContainer.classList.remove('hidden')
+  const firstDec = convertBinaryToDecimal(first);
+  const secondDec = convertBinaryToDecimal(second);
+  const sumDec = firstDec + secondDec;
+  const sumBin = convertDecimalToBinary(sumDec);
 
-  const [firstEntry, secondEntry] = entries
+  binaryInput.textContent = `${first} + ${second}`;
+  decimalOutput.textContent = `${firstDec} + ${secondDec} = ${sumDec}`;
+  turingResult.textContent = sumBin;
 
-  $binaryInput.innerText = `${firstEntry} + ${secondEntry}`
+  resultContainer.classList.remove('hidden');
+  resultArticle.classList.remove('hidden');
+});
 
-  $decimalOutput.innerText = `${convertBinaryToDecimal(
-    firstEntry
-  )} + ${convertBinaryToDecimal(secondEntry)} = ${
-    convertBinaryToDecimal(firstEntry) + convertBinaryToDecimal(secondEntry)
-  }`
-
-  $turingResult.innerText = `${convertDecimalToBinary(
-    convertBinaryToDecimal(firstEntry) + convertBinaryToDecimal(secondEntry)
-  )}`
-})
-
-function resetHiddenValues() {
-  resultArticle.classList.add('hidden')
-  invalidBinaryMessage.classList.add('hidden')
-  resultContainer.classList.add('hidden')
-}
+// Solo se permiten los caracteres 0, 1 y #
+input.addEventListener('input', (e) => {
+  const value = e.target.value;
+  const regex = /^[01#]*$/;
+  if (!regex.test(value)) {
+    e.target.value = value.slice(0, -1);
+  }
+});

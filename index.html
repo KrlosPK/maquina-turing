@@ -7,22 +7,44 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <script defer src="./script.js"></script>
+    <style>
+      /* Estilo para las líneas verticales en el input */
+      #input {
+        background-image: linear-gradient(
+          to right,
+          #d1d5db 0.5px,
+          transparent 0
+        );
+        background-size: 16px 100%;
+        font-family: monospace;
+        letter-spacing: 8.2px;
+        padding-left: 6px;
+      }
+    </style>
   </head>
-  <body class="max-w-sm mx-auto h-screen flex flex-col justify-center">
+  <body class="flex flex-col justify-center h-screen max-w-sm mx-auto">
     <form class="flex flex-col mb-8" id="binaryForm">
-      <h1 class="text-2xl mb-4 font-bold text-center">Máquina de Turing</h1>
+      <h1 class="mb-6 text-2xl font-bold text-center">Máquina de Turing</h1>
 
       <div class="mb-5">
         <label for="email" class="block mb-2 text-sm font-medium text-gray-900">
-          Input en Binario
+          Cinta de Entrada (Binario)
         </label>
 
         <input
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          autocomplete="off"
+          class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           id="input"
-          placeholder="Ejemplo: binario 010101#01010"
+          maxlength="23"
+          pattern="[01#]+"
+          placeholder="Ejemplo: 0101#010"
           required
+          title="Ingresa una cadena binaria (0, 1 y #)"
         />
+
+        <small class="text-xs text-gray-500">
+          Solo se permiten los caracteres 0, 1 y #
+        </small>
       </div>
 
       <button
@@ -36,26 +58,26 @@
       </button>
     </form>
 
-    <article class="bg-gray-200 p-4 rounded-lg hidden" id="resultArticle">
-      <h2 class="mb-4 text-xl font-bold">Traducción de la Entrada</h2>
+    <article class="hidden p-4 bg-gray-200 rounded-lg" id="resultArticle">
+      <h2 class="mb-6 text-xl font-bold">Traducción de la Entrada</h2>
 
-      <p id="invalidBinaryMessage" class="hidden text-red-500 font-bold">
+      <p id="invalidBinaryMessage" class="hidden font-bold text-red-500">
         Entrada binaria inválida
       </p>
 
       <div id="resultContainer">
-        <p>
+        <p class="mb-4">
           Entrada en Binario:
           <b><span id="binaryInput"></span></b>
         </p>
 
-        <p>
+        <p class="mb-4">
           Conversión a Decimal:
           <b><span id="decimalOutput"></span></b>
         </p>
 
         <p>
-          Resultado de la Máquina de Turing:
+          Resultado en Binario:
           <b><span id="turingResult"></span></b>
         </p>
       </div>
